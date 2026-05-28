@@ -20,3 +20,7 @@ awkward for both visitor and ranger.
 - [UX Vision](docs/ux-vision.md) -- gate experience goals and non-goals
 - [Proof of Concept](docs/proof-of-concept.md) -- what already exists
 - [Data Capture](docs/data-capture.md) -- options for getting reservations into the data store
+
+## Related Projects
+
+- **Lovable:** [Crystal River Reservations](https://lovable.dev/projects/9a86f7bf-6301-4532-b405-4d245786f833)
