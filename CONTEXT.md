@@ -1,4 +1,4 @@
-# Rainbow Springs App — Project Context
+# Rainbow Springs App -- Project Context
 
 ## Goal
 
@@ -11,7 +11,7 @@ at the gate; app must work fully offline once data is loaded.
 ## Scope (current)
 
 - Step 1: Scrape existing reservations from portal → store in SQLite
-- Step 2: Display layer — date-aware sorting, Code 128 barcode rendering, offline view
+- Step 2: Display layer -- date-aware sorting, Code 128 barcode rendering, offline view
 
 **Skipped for now:** Automated reservation/checkout ("clicky-clicky game")
 
@@ -28,21 +28,21 @@ at the gate; app must work fully offline once data is loaded.
 
 ### What the scraper extracts (per reservation)
 
-- **Park name** — e.g., `Rainbow Springs State Park`
-- **Reservation date** — e.g., `2026-06-15`
-- **Barcode data string** — raw alphanumeric text embedded in the Code 128 barcode, e.g., `FLSP-987654321-X`
+- **Park name** -- e.g., `Rainbow Springs State Park`
+- **Reservation date** -- e.g., `2026-06-15`
+- **Confirmation number** -- the booking ID encoded in the Code 128 barcode, e.g., `22569340`
 
 ---
 
 ## SQLite Schema: `local_reservations`
 
-| Column              | Type         | Purpose                                    | Example                    |
-|---------------------|--------------|--------------------------------------------|----------------------------|
-| id                  | Integer (PK) | Auto-increment unique ID                   | 1                          |
-| park_name           | Text         | State park location name                   | Rainbow Springs State Park |
-| reservation_date    | Text/Date    | Date pass is valid                         | 2026-06-15                 |
-| barcode_data_string | Text         | Raw alphanumeric text for Code 128 barcode | FLSP-987654321-X           |
-| is_used             | Boolean      | Visual toggle: already used today?         | 0 (False)                  |
+| Column              | Type         | Purpose                            | Example                    |
+|---------------------|--------------|------------------------------------|----------------------------|
+| id                  | Integer (PK) | Auto-increment unique ID           | 1                          |
+| park_name           | Text         | State park location name           | Rainbow Springs State Park |
+| reservation_date    | Text/Date    | Date pass is valid                 | 2026-06-15                 |
+| confirmation_number | Text         | Booking ID; encoded in barcode     | 22569340                   |
+| is_used             | Boolean      | Visual toggle: already used today? | 0 (False)                  |
 
 ---
 

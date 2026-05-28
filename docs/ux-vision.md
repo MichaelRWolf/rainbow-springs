@@ -1,12 +1,12 @@
-# UX Vision — Gate Entry Experience
+# UX Vision -- Gate Entry Experience
 
 ## The Moment That Matters
 
 Michael pulls up to the Rainbow Springs entry gate. The ranger needs to scan a
 barcode. The experience should be:
 
-1. Phone is already showing the barcode — or one tap away
-2. Barcode fills the screen — easy for the ranger to scan
+1. Phone is already showing the barcode -- or one tap away
+2. Barcode fills the screen -- easy for the ranger to scan
 3. No hunting for an email, no pinching to zoom, no awkward wait
 
 ## Goals
@@ -20,11 +20,11 @@ barcode. The experience should be:
 
 - Does not replace the official Florida State Parks app or website
 - Does not handle check-out or cancellations
-- Does not need to work for anyone other than Michael
+- Personal use only -- no public access or sign-ups
 
 ## Open Questions
 
-- [ ] What triggers the barcode display — a home screen widget, a dedicated app, a
+- [ ] What triggers the barcode display -- a home screen widget, a dedicated app, a
       web page bookmark, or a Shortcut?
 - [ ] What happens when there is no reservation for today?
 - [ ] Should upcoming reservations (next 7 days) also be visible?

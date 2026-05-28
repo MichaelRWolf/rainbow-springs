@@ -1,25 +1,25 @@
-# Data Capture — Getting Reservations into the Data Store
+# Data Capture -- Getting Reservations into the Data Store
 
 ## The Auth Problem
 
 The reservation page requires login:
 
-```
+```text
 GET https://reserve.floridastateparks.org/Web/Customers/CustomerReservations.aspx
 → 403 Forbidden (unauthenticated)
 ```
 
-Any scraping approach must operate inside an authenticated browser session —
+Any scraping approach must operate inside an authenticated browser session --
 there is no public API.
 
 ## Options
 
-| Approach | Trigger | Friction | Complexity |
-|---|---|---|---|
-| **Screenshot → Claude skill** (current) | Manual | Medium — switch to Claude, invoke skill | Low |
-| **Bookmarklet** | One click while logged in | Low | Medium |
-| **Playwright / browser automation** | Scheduled or on-demand | Near-zero after setup | High |
-| **iOS Shortcut** | One tap in Safari | Low on phone | Medium |
+| Approach                                | Trigger                   | Friction                                 | Complexity |
+|-----------------------------------------|---------------------------|------------------------------------------|------------|
+| **Screenshot → Claude skill** (current) | Manual                    | Medium -- switch to Claude, invoke skill | Low        |
+| **Bookmarklet**                         | One click while logged in | Low                                      | Medium     |
+| **Playwright / browser automation**     | Scheduled or on-demand    | Near-zero after setup                    | High       |
+| **iOS Shortcut**                        | One tap in Safari         | Low on phone                             | Medium     |
 
 ## Recommendation: Bookmarklet
 
@@ -42,23 +42,23 @@ parsing logic lives in one place rather than being split across platforms.
   - POST to a local server (requires Mac to be running)
   - Copy to clipboard → paste into a file or sheet
   - Write directly to a cloud store (Gist, Sheets API, iCloud)
-- [ ] What platform does Michael use when making reservations — phone or Mac?
+- [ ] What platform does Michael use when making reservations -- phone or Mac?
       (Answer changes whether Safari mobile bookmarklet or desktop bookmarklet
       is the primary path)
 - [ ] What is the HTML structure of the reservations page? (Need to inspect DOM
-      to write the scraper — requires a logged-in session)
+      to write the scraper -- requires a logged-in session)
 - [ ] Should capture run automatically on page load, or require a manual trigger?
 
 ## Data Shape
 
 Fields available from the Payment Summary page (confirmed via current skill):
 
-| Field | Example |
-|---|---|
-| Date | `05/01/2026` |
-| Confirmation Number | `22569340` |
-| Parking Space | `P 057` |
-| Purchased | `04/29/2026` |
+| Field               | Example      |
+|---------------------|--------------|
+| Date                | `05/01/2026` |
+| Confirmation Number | `22569340`   |
+| Parking Space       | `P 057`      |
+| Purchased           | `04/29/2026` |
 
 ## TODO
 
