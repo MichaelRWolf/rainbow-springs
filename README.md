@@ -20,6 +20,7 @@ awkward for both visitor and ranger.
 - [UX Vision](docs/ux-vision.md) -- gate experience goals and non-goals
 - [Proof of Concept](docs/proof-of-concept.md) -- what already exists
 - [Data Capture](docs/data-capture.md) -- options for getting reservations into the data store
+- [Art's Gemini Notes](docs/art-gemini-notes.md) -- scraping + SQLite blueprint from Art's conversation with Gemini
 
 ## Related Projects
 
