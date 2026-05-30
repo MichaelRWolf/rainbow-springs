@@ -36,7 +36,7 @@ Users forward a Florida State Parks confirmation email to `intake@rsdp.com`.
 - Unknown sender → server replies with 8-digit pairing code + QR image (registration)
 - Known sender → email is parsed, data pushed to device
 
-Three-level parsing pipeline (D5 in `docs/architecture-decisions.md`):
+Three-level parsing pipeline (D5 in [docs/architecture-decisions.md](docs/architecture-decisions.md)):
 
 1. HTML/CSS class targeting (USeDirect template class names) -- fast, brittle
 2. HTML → plain text → LLM structured extraction -- slower, robust
@@ -85,10 +85,10 @@ Pre-commit hooks: markdown-table-formatter, markdownlint-fix, ligature/smartquot
 
 ## Docs
 
-- `docs/architecture-decisions.md` -- **authoritative**: decisions D1--D12, data model,
+- [docs/architecture-decisions.md](docs/architecture-decisions.md) -- **authoritative**: decisions D1--D12, data model,
   address map, open questions, TODO list
-- `docs/lovable-spec.md` -- v2 app spec (Phase 1/2, display layer)
-- `docs/proof-of-concept.md` -- v1 Google Sheets + Claude skill (personal use, not v2 architecture)
-- `docs/data-capture.md` -- prior scraping/bookmarklet options (**superseded and rejected**)
-- `docs/art-gemini-notes.md` -- Playwright scraping notes (**rejected approach**)
-- `CONTEXT.md` -- high-level project summary
+- [docs/lovable-spec.md](docs/lovable-spec.md) -- v2 app spec (Phase 1/2, display layer)
+- [docs/proof-of-concept.md](docs/proof-of-concept.md) -- v1 Google Sheets + Claude skill (personal use, not v2 architecture)
+- [docs/data-capture.md](docs/data-capture.md) -- prior scraping/bookmarklet options (**superseded and rejected**)
+- [docs/art-gemini-notes.md](docs/art-gemini-notes.md) -- Playwright scraping notes (**rejected approach**)
+- [CONTEXT.md](CONTEXT.md) -- high-level project summary

@@ -20,7 +20,7 @@ User forwards a Florida State Parks confirmation email to `intake@rsdp.com`.
   to register the app
 - Known sender: email is parsed and pushed to the user's device
 
-Three-level parsing pipeline (see `docs/architecture-decisions.md` D5):
+Three-level parsing pipeline (see [docs/architecture-decisions.md](docs/architecture-decisions.md) D5):
 
 1. HTML/CSS class targeting (USeDirect template classes)
 2. Plain text + LLM structured extraction
@@ -69,7 +69,7 @@ parse_level, raw_email_ref.
 
 ## Proof of Concept (superseded for data capture)
 
-Google Sheets + Claude skill approach documented in `docs/proof-of-concept.md`.
+Google Sheets + Claude skill approach documented in [docs/proof-of-concept.md](docs/proof-of-concept.md).
 Code 128 barcode generation and display confirmed working. Data capture via
 screenshot + Claude skill is replaced by email ingestion in the new architecture.
 
@@ -77,8 +77,8 @@ screenshot + Claude skill is replaced by email ingestion in the new architecture
 
 ## Docs
 
-- `docs/architecture-decisions.md` -- decisions, rejected options, open questions, TODO list
-- `docs/ux-vision.md` -- gate experience goals and non-goals
-- `docs/proof-of-concept.md` -- existing skill + Sheet + Apps Script
-- `docs/data-capture.md` -- prior scraping options (superseded; kept for context)
-- `docs/lovable-spec.md` -- Lovable app spec (Phase 1/2 still valid for display layer)
+- [docs/architecture-decisions.md](docs/architecture-decisions.md) -- decisions, rejected options, open questions, TODO list
+- [docs/ux-vision.md](docs/ux-vision.md) -- gate experience goals and non-goals
+- [docs/proof-of-concept.md](docs/proof-of-concept.md) -- existing skill + Sheet + Apps Script
+- [docs/data-capture.md](docs/data-capture.md) -- prior scraping options (superseded; kept for context)
+- [docs/lovable-spec.md](docs/lovable-spec.md) -- Lovable app spec (Phase 1/2 still valid for display layer)

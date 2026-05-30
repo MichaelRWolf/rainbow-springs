@@ -2,7 +2,7 @@
 
 > **Note:** This is the v2 spec for the shared PWA built on email ingestion.
 > The v1 proof of concept (Google Sheets + Claude skill) is documented in
-> `proof-of-concept.md` and is kept as a working personal tool. These are
+> [proof-of-concept.md](proof-of-concept.md) and is kept as a working personal tool. These are
 > separate things with separate audiences.
 
 ## What This App Does

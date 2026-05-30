@@ -1,7 +1,7 @@
 # Proof of Concept (v1 -- Personal Use)
 
 > **Status:** Working. Kept as a personal tool for Michael.
-> Not the architecture for the v2 shared app -- see `architecture-decisions.md`.
+> Not the architecture for the v2 shared app -- see [architecture-decisions.md](architecture-decisions.md).
 > These are separate things: the PoC is a personal workflow; v2 is a shared PWA.
 
 The working proof of concept lives in the
