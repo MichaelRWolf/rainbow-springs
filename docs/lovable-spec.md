@@ -1,8 +1,13 @@
-# App Spec -- Rainbow Springs Reservation Barcode App
+# App Spec -- Rainbow Springs Reservation Barcode App (v2)
+
+> **Note:** This is the v2 spec for the shared PWA built on email ingestion.
+> The v1 proof of concept (Google Sheets + Claude skill) is documented in
+> `proof-of-concept.md` and is kept as a working personal tool. These are
+> separate things with separate audiences.
 
 ## What This App Does
 
-A small web app for Michael and a few friends who each have a Florida State
+A PWA for Michael and a small group of friends who each have a Florida State
 Parks annual pass and make their own day-use reservations at Rainbow Springs
 State Park. The app solves one problem: at the entry gate, rangers need to scan a
 barcode from your reservation. Finding that barcode in a confirmation email is
@@ -14,13 +19,16 @@ slow and awkward. This app shows the right barcode, full-screen, automatically.
   Parks reservation site (`reserve.floridastateparks.org`)
 - Each user has their own reservations, independent of the others
 - Personal use only -- no public sign-ups
+- Annual pass holders only (v1); one-off visitors are out of scope
 
 ## Phase 1 -- Get Reservations into the App
 
-Each user logs into the app and provides their Florida State Parks credentials.
-The app logs into `https://reserve.floridastateparks.org/Web/Customers/CustomerReservations.aspx`
-on their behalf, scrapes their upcoming reservations, and saves them to the
-app's database.
+Each user forwards a Florida State Parks confirmation email to `intake@rsdp.com`.
+
+- First forward from a new address: server replies with a pairing code to
+  register the app
+- User installs the PWA and enters the pairing code (or scans QR)
+- Subsequent forwards: parsed automatically, pushed to device
 
 Each reservation has:
 
@@ -29,8 +37,8 @@ Each reservation has:
 - **Parking Space** -- assigned space (e.g. `P 057`)
 - **Purchased** -- date the reservation was made
 
-The user can trigger a sync manually (a "Refresh Reservations" button). No
-reservations need to be entered by hand.
+No credentials required. No scraping. Manual forward is the minimum; a
+Mail.app rule automates it for power users.
 
 ## Phase 2 -- Show the Barcode at the Gate
 
