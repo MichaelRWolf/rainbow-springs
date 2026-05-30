@@ -4,49 +4,91 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Project Is
 
-A personal tool to make entry at Rainbow Springs State Park smoother. Florida
-State Parks requires a reservation; the confirmation email has a barcode rangers
-scan at the gate. The goal is to display that barcode full-screen on a phone --
-auto-selected for today's date -- with no email-hunting or pinching to zoom.
+A PWA (Progressive Web App) called **rsdp.com** (Rainbow Springs Day Pass) for Michael
+and a small group of friends with Florida State Parks annual passes. At the entry gate,
+rangers scan a Code 128 barcode from your reservation. This app shows the right barcode
+full-screen, automatically, with no email-hunting and no pinching to zoom.
 
 ## Current State
 
-No application code yet. The repo contains design docs and a working proof of
+No application code exists yet. The repo contains design docs and a working proof of
 concept that lives in a separate repo.
 
-**Proof of concept** -- `MichaelRWolf/claude-tools`, skill `extract-rainbow-springs-reservation`:
+**v1 Proof of concept** (personal use only, not the architecture for v2) -- `MichaelRWolf/claude-tools`,
+skill `extract-rainbow-springs-reservation`:
 
-- Claude skill: takes Payment Summary screenshots → extracts CSV → pastes into Google Sheet
-- Google Sheet: `1wLHPw0uB7pe7hw_NJ9hPQWoQ2mt4uyv7_2YaQUt8-UU`
-  - Reservations tab: Date, Confirmation Number, Parking Space, Purchased
-  - Barcode tab: highlights today's row, generates barcode from confirmation number via URL
-- `reservations.js`: Google Apps Script (copy-paste into Extensions → Apps Script), runs `onOpen` to deduplicate, sort, and format dates
+- Claude skill: Payment Summary screenshots → CSV → Google Sheet
+- Google Sheet: `1wLHPw0uB7pe7hw_NJ9hPQWoQ2mt4uyv7_2YaQUt8-UU` (Reservations tab + Barcode tab)
+- `reservations.js`: Google Apps Script deduplicate/sort/format, runs `onOpen`
 
-## Architecture Intent
+## Architecture (v2 -- Email Ingestion + PWA)
 
-The system has three layers being designed:
+### Data Capture -- Email Forwarding (NOT scraping)
 
-1. **Data capture** -- extract reservation data from the authenticated parks site into a data store
-2. **Data store** -- currently Google Sheets; long-term destination TBD
-3. **Barcode display** -- mobile-first, full-screen, offline-capable, auto-filters to today
+**The scraping/bookmarklet approach was explicitly rejected.** The portal
+(`reserve.floridastateparks.org`) runs Tyler Technologies "Recreation Dynamics"
+(ASP.NET WebForms, no public API, all state in `__VIEWSTATE`). Scraping requires
+stored credentials and breaks on UI changes; it is fragile and ToS-risky. The
+confirmation email the portal already sends is the durable, ToS-safe transport.
 
-The **preferred data-capture approach is a bookmarklet** -- JavaScript that runs
-in the browser while the user is logged in. The reservations page
-(`reserve.floridastateparks.org`) returns 403 unauthenticated; there is no API.
+Users forward a Florida State Parks confirmation email to `intake@rsdp.com`.
 
-The **preferred app-builder platform is Glide** (glideapps.com) because it
-connects natively to Google Sheets and renders image URLs full-screen on mobile.
-Lovable (lovable.dev) is the fallback if Glide's image sizing proves too
-constrained.
+- Unknown sender → server replies with 8-digit pairing code + QR image (registration)
+- Known sender → email is parsed, data pushed to device
 
-## Key Design Constraints
+Three-level parsing pipeline (D5 in `docs/architecture-decisions.md`):
 
-- Barcode display **must work offline** at the gate -- no network call to render
-- Personal use -- Michael and a small group of friends
-- Does not handle cancellations or check-out
+1. HTML/CSS class targeting (USeDirect template class names) -- fast, brittle
+2. HTML → plain text → LLM structured extraction -- slower, robust
+3. Raw email fallback -- stored and surfaced in app; no data loss
+
+### Sync
+
+- **Primary:** Web Push notification on email receipt → Service Worker → IndexedDB
+- **Safety net:** 6 AM local device time daily (park opens at 8 AM)
+
+### Display
+
+PWA installed to home screen (no App Store). Opens directly to today's barcode
+full-screen. One tap to reservation list. Offline-capable -- barcode renders
+from local IndexedDB, no network call.
+
+Barcode format: **Code 128**, confirmed by the v1 proof of concept.
+
+## Key Constraints
+
+- Offline barcode display at the gate (Service Worker + IndexedDB, no network call to render)
+- No App Store -- PWA only, single codebase for iOS and Android
+- No public API from Tyler Technologies -- email is the only safe data transport
+- Code 128 format confirmed by proof of concept
+- Single email address per account (v1); multi-email is a documented future TODO
+
+## Data Model
+
+Composite primary key `(confirmation_number, date)` handles multi-day reservations
+on one confirmation number as separate display records.
+
+See `docs/architecture-decisions.md` for full SQL schema.
+
+## Build Platform
+
+Likely **Lovable** (lovable.dev) generating React + Supabase. Lovable project:
+`https://lovable.dev/projects/9a86f7bf-6301-4532-b405-4d245786f833`
+
+## Development
+
+```bash
+make setup-hooks   # install pre-commit hooks (run once after clone)
+```
+
+Pre-commit hooks: markdown-table-formatter, markdownlint-fix, ligature/smartquote/dash fixers.
 
 ## Docs
 
-- `docs/ux-vision.md` -- gate experience goals, non-goals, open UX questions
-- `docs/proof-of-concept.md` -- detailed description of existing skill + Sheet + Apps Script
-- `docs/data-capture.md` -- scraping options, bookmarklet recommendation, data shape, open questions
+- `docs/architecture-decisions.md` -- **authoritative**: decisions D1--D12, data model,
+  address map, open questions, TODO list
+- `docs/lovable-spec.md` -- v2 app spec (Phase 1/2, display layer)
+- `docs/proof-of-concept.md` -- v1 Google Sheets + Claude skill (personal use, not v2 architecture)
+- `docs/data-capture.md` -- prior scraping/bookmarklet options (**superseded and rejected**)
+- `docs/art-gemini-notes.md` -- Playwright scraping notes (**rejected approach**)
+- `CONTEXT.md` -- high-level project summary
